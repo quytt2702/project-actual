@@ -1,0 +1,5 @@
+@include('admin.cai_dat_ngon_ngu.partials.cai_dat_thong_so')
+@include('admin.cai_dat_ngon_ngu.partials.menu_doc')
+@include('admin.cai_dat_ngon_ngu.partials.menu_ngang')
+@include('admin.cai_dat_ngon_ngu.partials.footer.cai_dat_footer')
+@include('admin.cai_dat_ngon_ngu.partials.cai_dat_slide')

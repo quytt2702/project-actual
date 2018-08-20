@@ -1,0 +1,74 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  overflow-x: hidden;
+  color: #313131;
+  font-weight: 300;
+}
+
+.custom-container {
+  width: 900px;
+  height: auto;
+  margin: 50px auto;
+  p {
+    font-size: 11px;
+  }
+  .address {
+    margin: 0;
+    padding: 0;
+  }
+
+  .title {
+    font-size: 5px;
+    text-align: center;
+  }
+
+  .flex-custom {
+    display: flex;
+    .khach {
+      margin-left: 150px;
+      flex: 2;
+      font-weight: 700;
+    }
+    .phieu {
+      flex:1;
+      margin-left: 100px;
+      font-weight: 700;
+    }
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  td {
+    padding: 8px;
+  }
+  .table-xuat-hang {
+    th {
+      border: 1px solid;
+      padding: 8px;
+      font-size: 11px;
+      width: auto;
+    }
+    .none-right {
+      text-align: right;
+      border-right: none;
+    }
+    .none-border {
+      border: {
+        right: none;
+        left: none;
+      }
+      text-align: right;
+    }
+    td {
+      border: 1px solid;
+      font-size: 11px;
+      width: auto;
+    }
+  }
+  .so-tien {
+    font-size: 11px;
+  }
+}

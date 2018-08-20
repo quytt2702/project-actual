@@ -1,0 +1,11 @@
+.ctv-toi-gioi-thieu {
+  .zoom {
+    transition: transform .5s;
+  }
+
+  .zoom:hover {
+    -ms-transform: scale(1.3);
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+  }
+}

@@ -1,0 +1,129 @@
+.hidden-sm {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.cart {
+  &__wrapper {
+    display: none;
+
+    @media (max-width: 768px) {
+      display: block;
+    }
+  }
+
+  &__item-list {
+    display: block;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__item {
+    display: block;
+    padding: {
+      top: 15px;
+      bottom: 15px;
+    }
+    border-bottom: 1px solid #ecf0f1;
+
+    &:last-child,
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+}
+
+.cart-item {
+  &__wrapper {
+    position: relative;
+    display: flex;
+  }
+
+  &__image-container {
+    max-width: 30%;
+
+    @media (max-width: 425px) {
+      max-width: 40%;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    position: relative;
+    padding: 0 15px 28px 15px;
+
+    .remove {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 28px;
+      height: 28px;
+      padding: 3px 8px;
+
+      &:before, &:after {
+        position: absolute;
+        content: "";
+        display: block;
+        width: 50%;
+        height: 1px;
+        background-color: #8e8e8e;
+      }
+
+      &:before {
+        top: 70%;
+        left: 45%;
+        transform: rotate(45deg) translate(-60%, -50%);
+      }
+
+      &:after {
+        top: 40%;
+        left: 40%;
+        transform: rotate(-45deg) translate(-30%, -50%);
+      }
+    }
+  }
+
+
+  &__name {
+    font-size: 16px;
+  }
+
+  &__price {
+    .qty-dropdown {
+      position: relative;
+      margin: 0;
+      padding: 4px 6px;
+      border: 1px solid #ecf0f1;
+      border-radius: 0;
+      background-color: #fafafa;
+      background-image: url(/one_tech_template/images/down.png);
+      background-repeat: no-repeat;
+      background-position: center right 5px;
+      padding-right: 20px;
+    }
+
+    .qty-price {
+      margin: {
+        top: 8px;
+        bottom: 8px;
+      }
+
+      .quantity,
+      .unit-price {
+        color: #dc283d;
+        font-weight: 700;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.text-center {
+  text-align: center;
+}

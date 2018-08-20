@@ -1,0 +1,45 @@
+.ctv-mua-san-pham {
+  .price {
+    bottom: 150px;
+    position: absolute;
+    padding: 15px 0;
+    width: 60px;
+    height: 60px;
+    color: #fff;
+    text-align: center;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -o-border-radius: 100%;
+    right: 0;
+  }
+
+  .action {
+    &__wrapper {
+      display: flex;
+      margin-left: -10px;
+      margin-right: -10px;
+
+      @media (max-width: 991px) {
+        flex-direction: column;
+      }
+    }
+
+    &__button {
+      flex: 1;
+      padding-left: 10px;
+      padding-right: 10px;
+
+      @media (max-width: 991px) {
+        margin-bottom: 10px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+}

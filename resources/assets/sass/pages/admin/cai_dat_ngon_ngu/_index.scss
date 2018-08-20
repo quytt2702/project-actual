@@ -1,0 +1,25 @@
+.admin-cai-dat-ngon-ngu {
+  .input-group {
+    margin-bottom: 15px;
+
+    .input-group-addon {
+      text-align: left;
+      min-width: 145px;
+    }
+  }
+  .logo-web {
+    overflow: hidden;
+    max-width: 300px;
+    position: relative;
+    #img-logo {
+      width: 100%;
+      object-fit: cover;
+    }
+    #xoa-logo {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      font-size: 16px;
+    }
+  }
+}

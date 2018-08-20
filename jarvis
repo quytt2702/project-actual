@@ -1,0 +1,156 @@
+#!/usr/bin/env bash
+
+docker="docker-compose"
+
+print_style () {
+    if [ "$2" == "info" ] ; then
+        COLOR="96m"
+    elif [ "$2" == "success" ] ; then
+        COLOR="92m"
+    elif [ "$2" == "warning" ] ; then
+        COLOR="93m"
+    elif [ "$2" == "danger" ] ; then
+        COLOR="91m"
+    else # Default color
+        COLOR="0m"
+    fi
+
+    STARTCOLOR="\e[$COLOR"
+    ENDCOLOR="\e[0m"
+
+    printf "$STARTCOLOR%b$ENDCOLOR" "$1" "\n"
+}
+
+display_options () {
+    printf "Jarvis options:\n";
+    print_style "\t docker up" "info"; printf "\t\t\t Docker compose up\n"
+    print_style "\t docker stop" "info"; printf "\t\t\t Docker compose stop\n"
+    print_style "\t docker down" "info"; printf "\t\t\t Docker compose down\n"
+    print_style "\t docker web" "info"; printf "\t\t\t Docker compose go to web container\n"
+    print_style "\t docker mysql" "info"; printf "\t\t\t Docker compose go to mysql container\n"
+    print_style "\t pull" "info"; printf "\t\t\t Pull from current branch and install composer\n"
+    print_style "\t build" "info"; printf "\t\t\t Setup project when you after cloning\n"
+    print_style "\t lint" "info"; printf "\t\t\t Linting your code\n"
+    print_style "\t lint:fix" "info"; printf "\t\t\t Auto linting your code\n"
+}
+
+print_exec_command() {
+    printf "Run: "
+    print_style "${1}" "info"
+    ${1}
+}
+
+case $1 in
+    build)
+        print_exec_command "git pull origin develop"
+        print_exec_command "composer install"
+        print_exec_command "yarn run production"
+        ;;
+    watch)
+        print_exec_command "yarn run watch-poll"
+        ;;
+    push)
+        print_exec_command "git add ."
+        print_exec_command "git commit -m save"
+        print_exec_command "git push origin develop"
+        ;;
+    deploy)
+        print_exec_command "git pull origin develop"
+        print_exec_command "yarn install "
+        print_exec_command "yarn run production"
+        print_exec_command "composer install"
+        # print_exec_command "php artisan migrate"
+        # print_exec_command "php artisan migrate:refresh --seed"
+        print_exec_command "service redis restart"
+        print_exec_command "service apache2 restart"
+        print_exec_command "supervisorctl stop all"
+        print_exec_command "supervisorctl start all"
+        ;;
+    serve)
+        # print_exec_command "sudo service mysql restart"
+        # print_exec_command "sudo service apache2 restart"
+        print_exec_command "php artisan serve"
+        ;;
+    redis)
+        print_exec_command "sudo redis-server --port 6379"
+        ;;
+    queue)
+        print_exec_command "php artisan queue:work"
+        ;;
+    seed)
+        print_exec_command "php artisan migrate:refresh --seed"
+        ;;
+    build)
+        printf "Step 1/4: "
+        print_style "Copy .env file" "info"
+        if [ ! -f .env ]; then
+            print_exec_command "cp .env.example .env"
+        else
+            print_style "File .env is exist => Not copy .env.example to .env" "warning"
+        fi
+        print_style "Step 1/4 complete\n" "info"
+
+        printf "Step 2/4: "
+        print_style "Composer install" "info"
+        print_exec_command "composer install"
+        print_style "Step 2/4 complete\n" "info"
+
+        printf "Step 3/4: "
+        print_style "Generate key" "info"
+        print_exec_command "php artisan key:generate"
+        print_style "Step 3/4 complete\n" "info"
+
+        printf "Step 4/4: "
+        print_style "Migrate and seed" "info"
+        print_exec_command "php artisan migrate --seed"
+        print_style "Step 4/4 complete" "info"
+        ;;
+    docker)
+        case $2 in
+            up)
+                services="sudo service"
+                print_exec_command "${services} apache2 stop"
+                print_exec_command "${services} mysql stop"
+                print_exec_command "${services} redis stop"
+                print_exec_command "${docker} up -d"
+                # print_exec_command "${docker} exec web sh /init.sh"
+                ;;
+            stop)
+                print_exec_command "${docker} stop"
+                ;;
+            down)
+                print_exec_command "${docker} down"
+                ;;
+            web)
+                print_exec_command "${docker} exec --user=jarvis web bash"
+                ;;
+            mysql)
+                print_exec_command "${docker} exec mysql bash"
+                ;;
+        esac
+        ;;
+
+    pull)
+        print_exec_command "git pull"
+        print_exec_command "composer install"
+        ;;
+
+    lint)
+        print_exec_command "./vendor/bin/phpcs ."
+        ;;
+
+    lint:fix)
+        print_exec_command "./vendor/bin/phpcbf ."
+        ;;
+
+    lint:push)
+        print_exec_command "./vendor/bin/phpcbf ."
+        print_exec_command "git add ."
+        print_exec_command "git commit -m lint_code"
+        print_exec_command "git push origin feature/son"
+        ;;
+
+    *)
+        display_options
+        ;;
+esac
